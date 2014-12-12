@@ -2,7 +2,7 @@
 
 This Dockerfile builds:
 
-* Ruby 2.1.2 installed from Brightbox ruby apt and bundler gem
+* Ruby 2.1.2 installed using ruby-build and bundler gem
 * Postgres 9.3 client and development headers
 * Git
 * Nodejs

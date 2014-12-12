@@ -19,19 +19,23 @@ RUN locale-gen en_US.UTF-8 &&\
   apt-add-repository ppa:git-core/ppa &&\
   # Add Chris Lea NodeJS repository
   apt-add-repository ppa:chris-lea/node.js &&\
-  # Add Brightbox ruby repository
-  apt-key adv --keyserver keyserver.ubuntu.com --recv C3173AA6 &&\
-  echo "deb http://ppa.launchpad.net/brightbox/ruby-ng/ubuntu trusty main" > /etc/apt/sources.list.d/bbruby.list &&\
   # Add PostgreSQL Global Development Group apt source
   echo "deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main" > /etc/apt/sources.list.d/pgdg.list &&\
   # Add PGDG repository key
   wget -qO - http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc | apt-key add - &&\
+  # Install ruby-install
+  cd /tmp &&\
+  wget -O ruby-install-0.5.0.tar.gz https://github.com/postmodern/ruby-install/archive/v0.5.0.tar.gz &&\
+  tar -xzvf ruby-install-0.5.0.tar.gz &&\
+  cd ruby-install-0.5.0/ &&\
+  make install &&\
   # Update apt cache with PPAs
   apt-get update &&\
   # Install git and ruby
   DEBIAN_FRONTEND=noninteractive apt-get install -y \
-  git \
-  ruby2.1 &&\
+  git &&\
+  # Install MRI Ruby 2.1.2
+  ruby-install --system ruby 2.1.2 &&\
   # Install bundler globally
   /bin/bash -l -c 'gem install --no-doc --no-ri bundler' &&\
   # Install Ruby application dependencies
