@@ -1,4 +1,4 @@
-FROM       ubuntu:14.04
+FROM       ubuntu
 MAINTAINER Sachin Sagar Rai <millisami@gmail.com>
 
 # Ensure UTF-8 locale
@@ -11,8 +11,8 @@ RUN locale-gen en_US.UTF-8 &&\
   wget \
   build-essential \
   libcurl4-openssl-dev \
-  python-dev \
-  python-setuptools \
+  g++ \
+  cmake \
   python-software-properties \
   software-properties-common &&\
   # Add official git APT repository
@@ -56,7 +56,6 @@ RUN locale-gen en_US.UTF-8 &&\
   supervisor &&\
   # Clean up APT and temporary files when done
   apt-get clean &&\
-  DEBIAN_FRONTEND=noninteractive apt-get remove --purge -y wget &&\
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 VOLUME ["/data", "/var/log/supervisor"]
